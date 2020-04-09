@@ -1,4 +1,5 @@
-# docker-nginx-rtmp
+# docker-nginx-rtmp [![Docker Stars](https://img.shields.io/docker/stars/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/) [![Docker Pulls](https://img.shields.io/docker/pulls/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/) [![Docker Automated build](https://img.shields.io/docker/automated/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/builds/) [![Build Status](https://travis-ci.org/cntrump/docker-nginx-rtmp.svg?branch=master)](https://travis-ci.org/cntrump/nginx-rtmp)
+
 A Dockerfile installing NGINX, nginx-http-flv-module and FFmpeg from source with
 default settings for HLS live streaming. Built on Alpine Linux.
 
@@ -6,11 +7,6 @@ default settings for HLS live streaming. Built on Alpine Linux.
 * nginx-http-flv-module 1.2.7 (compiled from source)
 * ffmpeg 4.2.1 (compiled from source)
 * Default HLS settings (See: [nginx.conf](nginx.conf))
-
-[![Docker Stars](https://img.shields.io/docker/stars/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/)
-[![Docker Automated build](https://img.shields.io/docker/automated/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/builds/)
-[![Build Status](https://travis-ci.org/cntrump/docker-nginx-rtmp.svg?branch=master)](https://travis-ci.org/cntrump/nginx-rtmp)
 
 ## Usage
 
