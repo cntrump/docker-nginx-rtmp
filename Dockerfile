@@ -1,4 +1,4 @@
-ARG NGINX_VERSION=1.16.1
+ARG NGINX_VERSION=1.17.9
 ARG NGINX_RTMP_VERSION=1.2.1
 ARG FFMPEG_VERSION=4.2.2
 
@@ -47,6 +47,7 @@ RUN cd /tmp/nginx-${NGINX_VERSION} && \
   --conf-path=/etc/nginx/nginx.conf \
   --with-threads \
   --with-file-aio \
+  --with-http_v2_module \
   --with-http_ssl_module \
   --with-debug \
   --with-cc-opt="-Wimplicit-fallthrough=0" && \
