@@ -1,7 +1,7 @@
 # docker-nginx-rtmp [![Docker Stars](https://img.shields.io/docker/stars/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/) [![Docker Pulls](https://img.shields.io/docker/pulls/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/) [![Docker Automated build](https://img.shields.io/docker/automated/cntrump/nginx-rtmp.svg)](https://hub.docker.com/r/cntrump/nginx-rtmp/builds/) [![Build Status](https://travis-ci.org/cntrump/docker-nginx-rtmp.svg?branch=master)](https://travis-ci.org/cntrump/nginx-rtmp)
 
-A Dockerfile installing NGINX, nginx-http-flv-module and FFmpeg from source with
-default settings for HLS live streaming. Built on Alpine Linux.
+A Dockerfile installing [NGINX](http://nginx.org), [nginx-http-flv-module](https://github.com/winshining/nginx-http-flv-module) and [FFmpeg](https://www.ffmpeg.org) from source with
+default settings for HLS live streaming. Built on [Alpine Linux](https://alpinelinux.org/).
 
 * Nginx 1.17.9 (Stable version compiled from source)
 * nginx-http-flv-module 1.2.7 (compiled from source)
@@ -44,7 +44,7 @@ I recommend using [Certbot](https://certbot.eff.org/docs/install.html) from [Let
 ### Environment Variables
 This Docker image uses `envsubst` for environment variable substitution. You can define additional environment variables in `nginx.conf` as `${var}` and pass them in your `docker-compose` file or `docker` command.
 
-### OBS Configuration
+### [OBS](https://obsproject.com) Configuration
 * Stream Type: `Custom Streaming Server`
 * URL: `rtmp://localhost:1935/stream`
 * Stream Key: `hello`
