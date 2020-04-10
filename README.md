@@ -51,12 +51,17 @@ This Docker image uses `envsubst` for environment variable substitution. You can
 
 ### Watch Stream
 * In Safari, VLC or any HLS player, open:
-```
-http://<server ip>:8080/live/$STREAM_NAME.m3u8
-```
+  ```
+  http://<server ip>:8080/live/$STREAM_NAME.m3u8
+  ```
+  HTTP-FLV:
+  ```
+  http://<server ip>:8080/flive?app=stream&stream=$STREAM_NAME
+  ```
 * Example Playlist: `http://localhost:8080/live/hello.m3u8`
 * [VideoJS Player](https://video-dev.github.io/hls.js/stable/demo/?src=http%3A%2F%2Flocalhost%3A8080%2Flive%2Fhello.m3u8)
 * FFplay: `ffplay -fflags nobuffer rtmp://localhost:1935/stream/hello`
+* HTTP-FLV: `http://localhost:8080/flive?app=stream&stream=hello`
 
 ### FFmpeg Build
 ```
