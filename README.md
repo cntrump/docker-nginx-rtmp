@@ -5,7 +5,7 @@ default settings for HLS live streaming. Built on [Alpine Linux](https://alpinel
 
 * Nginx 1.17.9 (Stable version compiled from source)
 * nginx-http-flv-module 1.2.7 (compiled from source)
-* ffmpeg 4.2.1 (compiled from source)
+* ffmpeg 4.2.2 (compiled from source)
 * Default HLS settings (See: [nginx.conf](nginx.conf))
 
 ## Usage
