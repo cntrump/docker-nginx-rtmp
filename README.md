@@ -3,7 +3,7 @@
 A Dockerfile installing [NGINX](http://nginx.org), [nginx-http-flv-module](https://github.com/winshining/nginx-http-flv-module) and [FFmpeg](https://www.ffmpeg.org) from source with
 default settings for HLS live streaming. Built on [Alpine Linux](https://alpinelinux.org/).
 
-* Nginx 1.17.9 (Stable version compiled from source)
+* Nginx 1.18.0 (Stable version compiled from source)
 * nginx-http-flv-module 1.2.7 (compiled from source)
 * ffmpeg 4.2.2 (compiled from source)
 * Default HLS settings (See: [nginx.conf](nginx.conf))
