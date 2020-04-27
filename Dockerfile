@@ -42,15 +42,19 @@ RUN cd /tmp && \
 # Compile nginx with nginx-rtmp module.
 RUN cd /tmp/nginx-${NGINX_VERSION} && \
   ./configure \
-  --prefix=/usr/local/nginx \
-  --add-module=/tmp/nginx-http-flv-module-${NGINX_RTMP_VERSION} \
-  --conf-path=/etc/nginx/nginx.conf \
-  --with-threads \
-  --with-file-aio \
-  --with-http_v2_module \
-  --with-http_ssl_module \
-  --with-debug \
-  --with-cc-opt="-Wimplicit-fallthrough=0" && \
+  --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib/nginx/modules \
+  --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log \
+  --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp \
+  --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+  --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+  --with-perl_modules_path=/usr/lib/perl5/vendor_perl --user=nginx --group=nginx --with-compat --with-file-aio --with-threads \
+  --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module \
+  --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_random_index_module \
+  --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module \
+  --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module \
+  --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module \
+  --with-cc-opt='-Os -fomit-frame-pointer' --with-ld-opt=-Wl,--as-needed \
+  --add-dynamic-module=/tmp/nginx-http-flv-module-${NGINX_RTMP_VERSION} && \
   cd /tmp/nginx-${NGINX_VERSION} && make && make install
 
 ###############################
@@ -127,11 +131,6 @@ RUN rm -rf /var/cache/* /tmp/*
 FROM alpine:3.11
 LABEL MAINTAINER Alfred Gutierrez <alf.g.jr@gmail.com>
 
-# Set default ports.
-ENV HTTP_PORT 80
-ENV HTTPS_PORT 443
-ENV RTMP_PORT 1935
-
 RUN apk add --update \
   ca-certificates \
   gettext \
@@ -150,20 +149,24 @@ RUN apk add --update \
   x264-dev \
   x265-dev
 
-COPY --from=build-nginx /usr/local/nginx /usr/local/nginx
+COPY --from=build-nginx /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=build-nginx /etc/nginx /etc/nginx
+COPY --from=build-nginx /usr/lib/nginx/modules /usr/lib/nginx/modules
 COPY --from=build-ffmpeg /usr/local /usr/local
 COPY --from=build-ffmpeg /usr/lib/libfdk-aac.so.2 /usr/lib/libfdk-aac.so.2
 
+RUN addgroup --g 101 nginx && \
+    adduser -G nginx -H -s /bin/false --disabled-password -u 101 nginx
+
 # Add NGINX path, config and static files.
-ENV PATH "${PATH}:/usr/local/nginx/sbin"
-ADD nginx.conf /etc/nginx/nginx.conf.template
-RUN mkdir -p /opt/data && mkdir /www
-ADD static /www/static
+ADD nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx && mkdir /opt/www
+ADD static /opt/www/static
 
 EXPOSE 1935
 EXPOSE 80
+EXPOSE 443
 
-CMD envsubst "$(env | sed -e 's/=.*//' -e 's/^/\$/g')" < \
-  /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
-  nginx
+RUN ldd /usr/sbin/nginx && nginx -V
+
+CMD ["nginx", "-g", "daemon off;"]
